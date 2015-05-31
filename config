@@ -1,0 +1,19 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+	hideDotFiles = dotGitOnly
+[remote "origin"]
+	url = git@github.com:Bobgy/portal.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[gui]
+	wmstate = normal
+	geometry = 799x475+232+213 159 214
+[merge]
+	tool = unityyamlmerge
+[mergetool "unityyamlmerge"]
+	trustExitCode = false
+	cmd = 'D:/Program Files/Unity/Editor/Data/Tools/UnityYAMLMerge.exe' merge -p "$BASE" "$REMOTE" "$LOCAL" "$MERGED"
