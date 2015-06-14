@@ -4,7 +4,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class StepThroughPortal : MonoBehaviour {
+public class Teleport : MonoBehaviour {
 	
 	public Transform otherPortal;
 	
