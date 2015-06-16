@@ -49,9 +49,9 @@ public class DeathCheck : MonoBehaviour
 			double dis = hit.distance;
 			GameObject obj = hit.collider.gameObject;
 			//Obj contains a token of Poison
-			if (obj.GetComponent<Poison>() && dis < LIMIT) {
+			/*if (obj.GetComponent<Poison>() && dis < LIMIT) {
 				return true;
-			}
+			}*/
 		}
 		return false;
 	}
