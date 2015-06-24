@@ -8,10 +8,11 @@ public class Teleport : MonoBehaviour {
 	
 	public Transform otherPortal;
     public AudioSource teleportSound;
+	public float TeleportOffset;
 	
 	// Use this for initialization
 	void Start () {
-		
+		TeleportOffset = 1;
 	}
 	
 	// Update is called once per frame
@@ -33,7 +34,7 @@ public class Teleport : MonoBehaviour {
 		}
 		// change position
 		other.transform.position = otherPortal.transform.position + otherPortal.transform.forward * 1;
-
+		
 		// change rotation
 		other.transform.rotation = otherPortal.transform.rotation;
 	}
