@@ -7,6 +7,7 @@ using System.Collections;
 public class Teleport : MonoBehaviour {
 	
 	public Transform otherPortal;
+    public AudioSource teleportSound;
 	
 	// Use this for initialization
 	void Start () {
@@ -22,6 +23,8 @@ public class Teleport : MonoBehaviour {
 		Debug.Log ("something hit the portal");
 
 		Quaternion q2 = Quaternion.FromToRotation(-transform.up, otherPortal.up);
+
+        teleportSound.Play();
 
 		// change velocity
 		if (other.GetComponent<Rigidbody>() != null) {
