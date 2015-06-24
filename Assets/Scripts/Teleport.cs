@@ -7,10 +7,11 @@ using System.Collections;
 public class Teleport : MonoBehaviour {
 	
 	public Transform otherPortal;
+	public float TeleportOffset;
 	
 	// Use this for initialization
 	void Start () {
-		
+		TeleportOffset = 2;
 	}
 	
 	// Update is called once per frame
@@ -21,17 +22,18 @@ public class Teleport : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		Debug.Log ("something hit the portal");
 
-		Quaternion q2 = Quaternion.FromToRotation(-transform.up, otherPortal.up);
-
-		// change velocity
-		if (other.GetComponent<Rigidbody>() != null) {
-			other.GetComponent<Rigidbody>().velocity = otherPortal.transform.forward * other.GetComponent<Rigidbody>().velocity.magnitude;
-			Debug.Log (otherPortal.transform.forward);
+		// change Rigidbody
+		if (other.GetComponent<Rigidbody> () != null) {
+			Debug.Log(other.transform.forward);
+			Vector3 relPoint = transform.InverseTransformPoint(other.transform.position);
+			Vector3 relVelocity = -transform.InverseTransformDirection (other.GetComponent<Rigidbody> ().velocity);
+			other.GetComponent<Rigidbody> ().velocity = otherPortal.transform.TransformDirection (relVelocity);
+			other.transform.position = otherPortal.transform.TransformPoint (relPoint) + (other.GetComponent<Rigidbody> ().velocity.normalized * TeleportOffset)
+				+ otherPortal.transform.forward * 1;
+			Debug.Log(other.transform.forward);
+		} else {
+			other.transform.position = otherPortal.transform.position + otherPortal.transform.forward * TeleportOffset;
+			other.transform.rotation = otherPortal.transform.rotation * Quaternion.Inverse(otherPortal.transform.rotation * Quaternion.Euler(0,0,180)) * other.transform.rotation;
 		}
-		// change position
-		other.transform.position = otherPortal.transform.position + otherPortal.transform.forward * 1;
-
-		// change rotation
-		other.transform.rotation = otherPortal.transform.rotation;
 	}
 }
