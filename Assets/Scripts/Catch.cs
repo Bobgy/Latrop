@@ -2,56 +2,67 @@
 using System.Collections;
 
 public class Catch : MonoBehaviour {
-	bool flag = false;
 	GameObject obj = null;
+	bool flag = false;
 	Vector3 lastPos;
-
-	// Use this for initialization
+	Vector3 centerPos = new Vector3(Screen.width / 2, Screen.height / 2, 0);
 
 	void Start () {
-		//Lock in the middle of the screen
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
 	}
-	
+
+	//Condition of Catching
+	bool IsCatchable(GameObject obj) {
+		CatchFlag myComp = (CatchFlag)obj.gameObject.GetComponent("CatchFlag");
+		return myComp != null;
+	}
+
 	// Update is called once per frame
 	void Update () {
+		//print (flag);
 		//print (Input.mousePosition);
 		//Set Key F to select obj;
-		if (Input.GetKey (KeyCode.F)) {
+		if (Input.GetKeyDown (KeyCode.F)) {
 			if (flag == false) {
-				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				Ray ray = Camera.main.ScreenPointToRay(centerPos);
 				RaycastHit hit;
 				GameObject hitObj = null;
 				if (Physics.Raycast(ray, out hit, 100f)) {
 					hitObj = hit.collider.gameObject;
-					print(hitObj.name);
+					//print(hitObj.name);
 					obj = hitObj.transform.gameObject;
 					lastPos = this.transform.position;
+					if (obj != null && IsCatchable(obj)) {
+						flag = true; 	//lock, if catch
+					}
 				}
-				//lock, only Sphere can be caught
-				if (obj != null && obj.name.Equals("Sphere")) flag = true; ///!
 			}
 			else {
-				//unlock
-				obj = null;
+				obj = null;				//unlock
 				flag = false;
 			}
 		}
 		//move the the cursor
 		if (flag == true) {
 			Vector3 offset = this.transform.position - lastPos;
+			offset.y = 0;
 			obj.transform.position += offset;
-
-			Vector3 screenPos = Camera.main.WorldToScreenPoint(obj.transform.position);
-			Vector3 mousePos = Input.mousePosition;
-			mousePos.z = screenPos.z;
-			Vector3 worldPos;
-			worldPos.x = Camera.main.ScreenToWorldPoint(mousePos).x;
-			worldPos.z = Camera.main.ScreenToWorldPoint(mousePos).z;
-			worldPos.y = obj.transform.position.y;
-			obj.transform.LookAt(worldPos);
-			obj.transform.Translate(Vector3.forward * Time.deltaTime);
-
+			float dx = Input.GetAxis("Mouse X");
+			float dy = Input.GetAxis("Mouse Y");
+			obj.transform.position += new Vector3(0, dy, 0);
+			obj.transform.LookAt(this.transform.position);
+			obj.transform.Translate(Vector3.left * dx);
 			lastPos = this.transform.position;
 		}
+	}
+
+	void OnGUI () {
+		float dx = Input.GetAxis ("Mouse X");
+		float dy = Input.GetAxis ("Mouse Y");
+		GUI.Label (new Rect (100, 70, 300, 300), "" + dx + " " + dy);
+		if (obj != null) GUI.Label (new Rect (100, 200, 300, 300), "" + obj.transform.position);
+		GUI.Label (new Rect (100, 50, 300, 300), "" + flag + " " + obj);
+		GUI.Label (new Rect (Screen.width / 2, Screen.height / 2, 30, 30), "+");
 	}
 }
