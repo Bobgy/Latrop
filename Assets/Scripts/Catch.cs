@@ -20,8 +20,6 @@ public class Catch : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		//print (flag);
-		//print (Input.mousePosition);
 		//Set Key F to select obj;
 		if (Input.GetKeyDown (KeyCode.F)) {
 			if (flag == false) {
@@ -30,7 +28,6 @@ public class Catch : MonoBehaviour {
 				GameObject hitObj = null;
 				if (Physics.Raycast(ray, out hit, 100f)) {
 					hitObj = hit.collider.gameObject;
-					//print(hitObj.name);
 					obj = hitObj.transform.gameObject;
 					lastPos = this.transform.position;
 					if (obj != null && IsCatchable(obj)) {
@@ -58,11 +55,6 @@ public class Catch : MonoBehaviour {
 	}
 
 	void OnGUI () {
-		float dx = Input.GetAxis ("Mouse X");
-		float dy = Input.GetAxis ("Mouse Y");
-		GUI.Label (new Rect (100, 70, 300, 300), "" + dx + " " + dy);
-		if (obj != null) GUI.Label (new Rect (100, 200, 300, 300), "" + obj.transform.position);
-		GUI.Label (new Rect (100, 50, 300, 300), "" + flag + " " + obj);
 		GUI.Label (new Rect (Screen.width / 2, Screen.height / 2, 30, 30), "+");
 	}
 }
