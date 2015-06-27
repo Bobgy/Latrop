@@ -18,12 +18,12 @@ public class Shoot : MonoBehaviour {
         if (Input.GetMouseButtonUp(0)){
             GameObject projectile = (GameObject)Instantiate(blueBullet, bulletSpawn.transform.position, bulletSpawn.rotation);
             projectile.SetActive(true);
-            shootSound.Play();
+            if (shootSound != null) shootSound.Play();
         }
         if (Input.GetMouseButtonUp(1)){
             GameObject projectile = (GameObject)Instantiate(redBullet, bulletSpawn.transform.position, bulletSpawn.rotation);
             projectile.SetActive(true);
-            shootSound.Play();
+            if (shootSound != null) shootSound.Play();
         }
 	}
 }

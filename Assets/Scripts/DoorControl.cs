@@ -33,7 +33,7 @@ public class DoorControl : MonoBehaviour
         openCount++;
         if (openCount == 1) // close -> open
         {
-            soundButtonOn.Play();
+            if (soundButtonOn != null) soundButtonOn.Play();
             targetPosition += openVector;
         }
     }

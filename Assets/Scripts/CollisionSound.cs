@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CollsionSound : MonoBehaviour {
+public class CollisionSound : MonoBehaviour {
 
     public AudioSource collisionSound;
 
@@ -23,9 +23,8 @@ public class CollsionSound : MonoBehaviour {
         Debug.Log("haha");
         float speed = collision.relativeVelocity.sqrMagnitude;
         Debug.Log(speed);
-        if (speed >= threshold)
-        {
-            collisionSound.Play();
+        if (speed >= threshold) {
+            if (collisionSound != null) collisionSound.Play();
         }
     }
 

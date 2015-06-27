@@ -14,8 +14,7 @@ public class Catch : MonoBehaviour {
 
 	//Condition of Catching
 	bool IsCatchable(GameObject obj) {
-		CatchFlag myComp = (CatchFlag)obj.gameObject.GetComponent("CatchFlag");
-		return myComp != null;
+        return obj.gameObject.GetComponent("CatchFlag") != null;
 	}
 
 	// Update is called once per frame

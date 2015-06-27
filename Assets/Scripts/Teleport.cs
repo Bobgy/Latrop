@@ -25,7 +25,7 @@ public class Teleport : MonoBehaviour {
 
 		Quaternion q2 = Quaternion.FromToRotation(-transform.up, otherPortal.up);
 
-        teleportSound.Play();
+        if (teleportSound != null) teleportSound.Play();
 
 		// change velocity
 		if (other.GetComponent<Rigidbody>() != null) {
