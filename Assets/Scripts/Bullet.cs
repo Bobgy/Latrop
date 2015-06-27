@@ -12,7 +12,8 @@ public class Bullet : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        velocity = -transform.forward * speed;
+        velocity = transform.forward * speed;
+        GetComponent<Rigidbody>().velocity = velocity;
         Destroy (gameObject, DestroyTime);
 	}
 	
@@ -22,29 +23,27 @@ public class Bullet : MonoBehaviour {
     
     void FixedUpdate ()
     {
-        transform.position += velocity * Time.deltaTime;
+        //transform.position += velocity * Time.deltaTime;
     }
 
-    void OnTriggerEnter(Collider collider)
+    void OnCollisionEnter(Collision collision)
     {
-        if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Portal")
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Portal")
             return;
         Ray ray = new Ray(transform.position, velocity);
         RaycastHit hit;
-        if((collider.gameObject.tag == "Floor" || collider.gameObject.tag == "Portalable") && Physics.Raycast(ray, out hit))
+        if ((collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Portalable") && Physics.Raycast(ray, out hit))
         {
             Quaternion hitObjectRotation = Quaternion.LookRotation(hit.normal);
             portal.transform.position = transform.position;
-            if (collider.gameObject.tag == "Floor")
+            if (collision.gameObject.tag == "Floor")
                 portal.transform.eulerAngles = new Vector3(hitObjectRotation.eulerAngles.x, transform.eulerAngles.y, hitObjectRotation.eulerAngles.z);
             else
                 portal.transform.rotation = hitObjectRotation;
             portal.SetActive(true);
         }
-        if (whichPortal)
-            ui.GetComponent<Ui>().blue = false;
-        else
-            ui.GetComponent<Ui>().red = false;
+        if (whichPortal) ui.GetComponent<Ui>().blue = false;
+        else ui.GetComponent<Ui>().red = false;
         Destroy(gameObject);
     }
 }
