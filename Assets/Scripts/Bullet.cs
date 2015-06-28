@@ -35,6 +35,7 @@ public class Bullet : MonoBehaviour {
         if ((collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Portalable") && Physics.Raycast(ray, out hit))
         {
             Quaternion hitObjectRotation = Quaternion.LookRotation(hit.normal);
+			portal.GetComponent<Teleport>().hitNormal = hit.normal;
             portal.transform.position = transform.position;
             if (collision.gameObject.tag == "Floor")
                 portal.transform.eulerAngles = new Vector3(hitObjectRotation.eulerAngles.x, transform.eulerAngles.y, hitObjectRotation.eulerAngles.z);

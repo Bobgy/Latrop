@@ -33,6 +33,7 @@ public class ThrowPortal : MonoBehaviour {
 		RaycastHit hit;
 		if(Physics.Raycast(ray, out hit)) {
 			Quaternion hitObjectRotation = Quaternion.LookRotation(hit.normal);
+			portal.GetComponent<Teleport>().hitNormal = hit.normal;
 			portal.transform.position = hit.point;
 			portal.transform.rotation = hitObjectRotation;
 		}
