@@ -14,7 +14,8 @@ public class Catch : MonoBehaviour {
 
 	//Condition of Catching
 	bool IsCatchable(GameObject obj) {
-        return obj.gameObject.GetComponent("CatchFlag") != null;
+		//use tag, name "catchflag"
+		return obj.gameObject.tag == "catchflag";
 	}
 
 	// Update is called once per frame
@@ -41,6 +42,7 @@ public class Catch : MonoBehaviour {
 		}
 		//move the the cursor
 		if (flag == true) {
+			///!
 			Vector3 offset = this.transform.position - lastPos;
 			offset.y = 0;
 			obj.transform.position += offset;
@@ -54,6 +56,7 @@ public class Catch : MonoBehaviour {
 	}
 
 	void OnGUI () {
+		//GUI.Label (new Rect (100, 50, 300, 300), "" + flag + " " + obj);
 		GUI.Label (new Rect (Screen.width / 2, Screen.height / 2, 30, 30), "+");
 	}
 }
