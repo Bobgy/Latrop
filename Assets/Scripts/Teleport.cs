@@ -3,6 +3,7 @@
 */
 using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class Teleport : MonoBehaviour {
 	
@@ -40,6 +41,13 @@ public class Teleport : MonoBehaviour {
 			other.GetComponent<Rigidbody>().velocity = q2 * other.GetComponent<Rigidbody>().velocity;
 			Debug.Log (otherPortal.transform.forward);
 		}
+
+        
+        FPCtrl ctrl = other.GetComponent<FPCtrl>();
+        RigidbodyFirstPersonController ctrl2 = other.GetComponent<RigidbodyFirstPersonController>();
+        if (ctrl != null) ctrl.setJumping();
+        if (ctrl2 != null) ctrl2.setJumping();
+
 		// change position
 		other.transform.position = otherPortal.transform.position;// + otherPortal.transform.forward * 1;
 		
