@@ -85,7 +85,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private CapsuleCollider m_Capsule;
         private float m_YRotation;
         private Vector3 m_GroundContactNormal;
-        private bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
+        public bool m_Jump, m_PreviouslyGrounded, m_Jumping, m_IsGrounded;
 
 
         public Vector3 Velocity
@@ -134,6 +134,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
         }
 
+        public void setJumping()
+        {
+            m_RigidBody.drag = 0f;
+            m_Jumping = true;
+            m_IsGrounded = false;
+        }
 
         private void FixedUpdate()
         {
@@ -170,7 +176,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
                 if (!m_Jumping && Mathf.Abs(input.x) < float.Epsilon && Mathf.Abs(input.y) < float.Epsilon && m_RigidBody.velocity.magnitude < 1f)
                 {
-                    m_RigidBody.Sleep();
+                    //m_RigidBody.Sleep();
                 }
             }
             else
