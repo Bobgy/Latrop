@@ -35,11 +35,10 @@ public class Teleport : MonoBehaviour {
 		}
 
         
-        RigidbodyFirstPersonController ctrl = other.GetComponent<RigidbodyFirstPersonController>();
-        if (ctrl != null)
-        {
-            ctrl.setJumping();
-        }
+        FPCtrl ctrl = other.GetComponent<FPCtrl>();
+        RigidbodyFirstPersonController ctrl2 = other.GetComponent<RigidbodyFirstPersonController>();
+        if (ctrl != null) ctrl.setJumping();
+        if (ctrl2 != null) ctrl2.setJumping();
 
 		// change position
 		other.transform.position = otherPortal.transform.position + otherPortal.transform.forward * 1;
