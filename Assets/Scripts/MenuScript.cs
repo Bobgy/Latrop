@@ -3,6 +3,12 @@ using System.Collections;
 
 public class MenuScript : MonoBehaviour {
 
+    void Start()
+    {
+		Cursor.visible = true;
+		Cursor.lockState = CursorLockMode.None;
+    }
+
 	void OnGUI() {
 		const int buttonWidth = 84;
 		const int buttonHeight = 30;

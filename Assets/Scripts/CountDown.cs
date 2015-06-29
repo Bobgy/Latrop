@@ -19,7 +19,7 @@ public class CountDown : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (run == 1) {
 			sec -= Time.deltaTime;
 		}

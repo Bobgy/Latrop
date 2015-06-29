@@ -27,14 +27,14 @@ public class DeathCheck : MonoBehaviour
         DeathFlag = false;
         Time.timeScale = 1;
         Application.LoadLevel("MainMenu");
-		//to be done
 	}
 
 	void Next() {
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
         DeathFlag = false;
         Time.timeScale = 1;
         Application.LoadLevel("demo2");
-		//to be done
 	}
 	
 	void GUIAlphaColor_0_To_1 ()
@@ -69,6 +69,8 @@ public class DeathCheck : MonoBehaviour
 			windowSwitch = 1;
 			alpha = 0; // Init Window Alpha Color
             Time.timeScale = 0;
+    		Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
 		}
 	}
 	
