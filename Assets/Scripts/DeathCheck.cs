@@ -24,11 +24,16 @@ public class DeathCheck : MonoBehaviour
 	bool DeathFlag = false;
 
 	void Finish() {
-        Debug.Log("Die!");
+        DeathFlag = false;
+        Time.timeScale = 1;
+        Application.LoadLevel("MainMenu");
 		//to be done
 	}
 
 	void Next() {
+        DeathFlag = false;
+        Time.timeScale = 1;
+        Application.LoadLevel("demo2");
 		//to be done
 	}
 	
@@ -63,6 +68,7 @@ public class DeathCheck : MonoBehaviour
 		if (DeathFlag) {
 			windowSwitch = 1;
 			alpha = 0; // Init Window Alpha Color
+            Time.timeScale = 0;
 		}
 	}
 	
@@ -80,10 +86,10 @@ public class DeathCheck : MonoBehaviour
 	{
 		GUI.Label (new Rect (100, 50, 300, 30), "You are Dead!");
 		
-		if (GUI.Button (new Rect (80, 110, 100, 20), "Quit")) {
+		if (GUI.Button (new Rect (80, 110, 100, 20), "Back to menu")) {
 			Finish();
 		} 
-		if (GUI.Button (new Rect (220, 110, 100, 20), "Continue")) {
+		if (GUI.Button (new Rect (220, 110, 100, 20), "Restart")) {
 			Next();
 			windowSwitch = 0; 
 		} 

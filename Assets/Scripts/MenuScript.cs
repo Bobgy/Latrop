@@ -10,7 +10,7 @@ public class MenuScript : MonoBehaviour {
 		Rect ExitButton = new Rect(30, Screen.height - 80, buttonWidth, buttonHeight);
 		Rect AboutButton = new Rect(30, Screen.height - 40, buttonWidth, buttonHeight);
 		if (GUI.Button(StartButton, "START")) {
-			Application.LoadLevel("level1");
+			Application.LoadLevel("demo2");
 		}
 		if (GUI.Button(ExitButton, "EXIT")) {
 			Application.Quit();
