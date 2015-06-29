@@ -2,11 +2,13 @@
 using System.Collections;
 
 public class Catch : MonoBehaviour {
+	public float Xspeed = 1.0f;
+	public float Yspeed = 1.0f;
+
 	GameObject obj = null;
 	bool flag = false;
 	Vector3 lastPos;
 	Vector3 centerPos = new Vector3(Screen.width / 2, Screen.height / 2, 0);
-
 	void Start () {
 		Cursor.visible = false;
 		Cursor.lockState = CursorLockMode.Locked;
@@ -42,21 +44,22 @@ public class Catch : MonoBehaviour {
 		}
 		//move the the cursor
 		if (flag == true) {
-			///!
 			Vector3 offset = this.transform.position - lastPos;
-			offset.y = 0;
-			obj.transform.position += offset;
-			float dx = Input.GetAxis("Mouse X");
-			float dy = Input.GetAxis("Mouse Y");
+			offset.y = 0.0f;
+			obj.transform.position += offset * Xspeed;
+			float dy = Input.GetAxis("Mouse Y") * Yspeed;
+			if (dy > 0.2f) {
+				dy = 0.2f;
+			}
+			if (dy < -0.2f) {
+				dy = -0.2f;
+			}
 			obj.transform.position += new Vector3(0, dy, 0);
-			obj.transform.LookAt(this.transform.position);
-			obj.transform.Translate(Vector3.left * dx);
 			lastPos = this.transform.position;
 		}
 	}
 
 	void OnGUI () {
-		//GUI.Label (new Rect (100, 50, 300, 300), "" + flag + " " + obj);
 		GUI.Label (new Rect (Screen.width / 2, Screen.height / 2, 30, 30), "+");
 	}
 }
