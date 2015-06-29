@@ -57,6 +57,7 @@ public class Catch : MonoBehaviour {
 			offset.y = 0.0f;
 			NextPos += offset * Xspeed;
 			float dy = Input.GetAxis("Mouse Y") * Yspeed;
+			float dx = Input.GetAxis("Mouse X") * Xspeed;
 			if (dy > 0.2f) {
 				dy = 0.2f;
 			}
@@ -65,6 +66,10 @@ public class Catch : MonoBehaviour {
 			}
 			NextPos += new Vector3(0, dy, 0);
 			obj.transform.position = NextPos;
+			//!
+			obj.transform.LookAt(this.transform.position);
+			obj.transform.Translate(new Vector3(-dx, 0, 0));
+			//!
 			lastPos = this.transform.position;
 		}
 	}
