@@ -3,12 +3,13 @@ using System.Collections;
 
 //Add rigidbody to the catchobject object
 //mass = 1
-//drag = 100
+//drag = 5
 //Angular Dray = 5
 public class Catch : MonoBehaviour {
 	public float Xspeed = 1.0f;
 	public float Yspeed = 1.0f;
 	public float Fspeed = 1.0f;
+	public float CatchDistance = 2.0f;
 
 	GameObject obj = null;
 	bool flag = false;
@@ -33,7 +34,7 @@ public class Catch : MonoBehaviour {
 				Ray ray = Camera.main.ScreenPointToRay(centerPos);
 				RaycastHit hit;
 				GameObject hitObj = null;
-				if (Physics.Raycast(ray, out hit, 100f)) {
+				if (Physics.Raycast(ray, out hit, CatchDistance)) {
 					hitObj = hit.collider.gameObject;
 					obj = hitObj.transform.gameObject;
 					lastPos = this.transform.position;
