@@ -8,6 +8,7 @@ using System.Collections;
 public class Catch : MonoBehaviour {
 	public float Xspeed = 1.0f;
 	public float Yspeed = 1.0f;
+	public float Fspeed = 1.0f;
 
 	GameObject obj = null;
 	bool flag = false;
@@ -55,7 +56,7 @@ public class Catch : MonoBehaviour {
 			Vector3 NextPos = obj.transform.position;
 			Vector3 offset = this.transform.position - lastPos;
 			offset.y = 0.0f;
-			NextPos += offset * Xspeed;
+			NextPos += offset * Fspeed;
 			float dy = Input.GetAxis("Mouse Y") * Yspeed;
 			float dx = Input.GetAxis("Mouse X") * Xspeed;
 			if (dy > 0.2f) {
