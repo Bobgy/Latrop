@@ -24,6 +24,7 @@ public class DeathCheck : MonoBehaviour
 	bool DeathFlag = false;
 
 	void Finish() {
+        Debug.Log("Die!");
 		//to be done
 	}
 
@@ -52,7 +53,8 @@ public class DeathCheck : MonoBehaviour
 	//DeachCheck
 	void OnCollisionEnter(Collision other)
 	{
-		DeathFlag = (other.gameObject.tag == "poison");
+        Debug.Log(other.gameObject.tag);
+		DeathFlag = (other.gameObject.tag == "Poison");
 	}
 
 

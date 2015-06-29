@@ -22,7 +22,7 @@ public class Catch : MonoBehaviour {
 	//Condition of Catching
 	bool IsCatchable(GameObject obj) {
 		//use tag, name "catchflag"
-		return obj.gameObject.tag == "catchflag";
+		return obj.gameObject.tag == "CatchFlag";
 	}
 
 	// Update is called once per frame
