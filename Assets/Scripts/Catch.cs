@@ -37,11 +37,15 @@ public class Catch : MonoBehaviour {
 					obj = hitObj.transform.gameObject;
 					lastPos = this.transform.position;
 					if (obj != null && IsCatchable(obj)) {
+						Rigidbody rb = obj.gameObject.GetComponent<Rigidbody>();
+						rb.useGravity = false;
 						flag = true; 	//lock, if catch
 					}
 				}
 			}
 			else {
+				Rigidbody rb = obj.gameObject.GetComponent<Rigidbody>();
+				rb.useGravity = true;
 				obj = null;				//unlock
 				flag = false;
 			}
@@ -66,6 +70,6 @@ public class Catch : MonoBehaviour {
 	}
 
 	void OnGUI () {
-		//GUI.Label (new Rect (Screen.width / 2, Screen.height / 2, 30, 30), "+");
+		GUI.Label (new Rect (Screen.width / 2, Screen.height / 2, 30, 30), "+");
 	}
 }
