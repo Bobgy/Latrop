@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Add rigidbody to the catchobject object
+//mass = 1
+//drag = 100
+//Angular Dray = 5
 public class Catch : MonoBehaviour {
 	public float Xspeed = 1.0f;
 	public float Yspeed = 1.0f;
@@ -44,9 +48,10 @@ public class Catch : MonoBehaviour {
 		}
 		//move the the cursor
 		if (flag == true) {
+			Vector3 NextPos = obj.transform.position;
 			Vector3 offset = this.transform.position - lastPos;
 			offset.y = 0.0f;
-			obj.transform.position += offset * Xspeed;
+			NextPos += offset * Xspeed;
 			float dy = Input.GetAxis("Mouse Y") * Yspeed;
 			if (dy > 0.2f) {
 				dy = 0.2f;
@@ -54,12 +59,13 @@ public class Catch : MonoBehaviour {
 			if (dy < -0.2f) {
 				dy = -0.2f;
 			}
-			obj.transform.position += new Vector3(0, dy, 0);
+			NextPos += new Vector3(0, dy, 0);
+			obj.transform.position = NextPos;
 			lastPos = this.transform.position;
 		}
 	}
 
 	void OnGUI () {
-		GUI.Label (new Rect (Screen.width / 2, Screen.height / 2, 30, 30), "+");
+		//GUI.Label (new Rect (Screen.width / 2, Screen.height / 2, 30, 30), "+");
 	}
 }
