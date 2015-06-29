@@ -7,24 +7,24 @@ using System.Collections;
 //Angular Dray = 5
 public class Catch : MonoBehaviour {
 	public float CatchDistance = 2.0f;
-
+	
 	GameObject obj = null;
 	bool flag = false;
 	Vector3 centerPos = new Vector3(Screen.width / 2, Screen.height / 2, 0);
-
+	
 	float myDistance;
-
+	
 	void Start () {
 		Cursor.visible = false;
 		Cursor.lockState = CursorLockMode.Locked;
 	}
-
+	
 	//Condition of Catching
 	bool IsCatchable(GameObject obj) {
 		//use tag, name "catchflag"
 		return obj.gameObject.tag == "CatchFlag";
 	}
-
+	
 	// Update is called once per frame
 	void Update () {
 		//Set Key F to select obj;
@@ -37,6 +37,7 @@ public class Catch : MonoBehaviour {
 					hitObj = hit.collider.gameObject;
 					obj = hitObj.transform.gameObject;
 					myDistance = Vector3.Distance(this.transform.position, obj.transform.position);
+					Debug.Log(myDistance);
 					if (obj != null && IsCatchable(obj)) {
 						Rigidbody rb = obj.gameObject.GetComponent<Rigidbody>();
 						rb.useGravity = false;
@@ -51,21 +52,19 @@ public class Catch : MonoBehaviour {
 				flag = false;
 			}
 		}
+	}
+	
+	void FixedUpdate() {
 		//move the the cursor
 		if (flag == true) {
+			obj.transform.LookAt(this.transform.position);
 			Ray ray = Camera.main.ScreenPointToRay(centerPos);
-
-			float k = (
-				ray.direction.x * ray.direction.x + 
-				ray.direction.y * ray.direction.y + 
-				ray.direction.z * ray.direction.z
-				)	/
-				myDistance * myDistance;
-			Vector3 JumpPos = ray.origin + ray.direction * k;
-			obj.transform.position = JumpPos;
+			Vector3 JumpPos = ray.origin + ray.direction * myDistance;
+			Rigidbody rb = obj.gameObject.GetComponent<Rigidbody>();
+			rb.velocity = (JumpPos - obj.transform.position) / Time.deltaTime;
 		}
 	}
-
+	
 	void OnGUI () {
 		GUI.Label (new Rect (Screen.width / 2, Screen.height / 2, 30, 30), "+");
 	}
