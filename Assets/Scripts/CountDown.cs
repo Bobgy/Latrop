@@ -2,9 +2,18 @@
 using System.Collections;
 
 public class CountDown : MonoBehaviour {
-	public float sec = 110;
+	public float sec = 23;
 	public int run = 1;
+
 	GUIStyle myStyle;
+
+	int windowWidth = 400;
+	int windowHight = 150;
+	Rect windowRect ;
+	int windowSwitch = 0;
+
+	bool TimeFlag = false;
+
 	// Use this for initialization
 	void Start () {
 		run = 1;
@@ -14,8 +23,34 @@ public class CountDown : MonoBehaviour {
 	}
 	
 	//Do after Count Down
-	void Finish() {
-		//!
+	void TimeOut()
+	{
+		TimeFlag = true;
+	}
+
+	void Finish() 
+	{
+		TimeFlag = false;
+		Time.timeScale = 1;
+		Application.LoadLevel("MainMenu");
+	}
+
+	void Next() 
+	{
+		TimeFlag = false;
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
+		Time.timeScale = 1;
+		Application.LoadLevel("demo2");
+	}
+
+	void Update() {
+		if (TimeFlag) {
+			windowSwitch = 1;
+			Time.timeScale = 0;
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
+		}
 	}
 	
 	// Update is called once per frame
@@ -25,8 +60,17 @@ public class CountDown : MonoBehaviour {
 		}
 		if (sec < 0) {
 			run = 0;
-			Finish ();
+			TimeOut ();
 		}
+	}
+
+	void Awake ()
+	{
+		windowRect = new Rect (
+			(Screen.width - windowWidth) / 2,
+			(Screen.height - windowHight) / 2,
+			windowWidth,
+			windowHight);
 	}
 
 	void OnGUI() {
@@ -46,5 +90,26 @@ public class CountDown : MonoBehaviour {
 		else {
 			GUI.Label (new Rect (Screen.width / 2 - 100, 50, 100, 100), "Time:   " + (int)sec, myStyle);
 		}
+
+		//!
+		if (windowSwitch == 1) {
+			GUI.color = new Color (1, 1, 1, 1);
+			windowRect = GUI.Window (0, windowRect, QuitWindow, "Quit Window");
+		}
 	}
+	
+	void QuitWindow (int windowID)
+	{
+		GUI.Label (new Rect (100, 50, 300, 30), "Time is out!");
+		
+		if (GUI.Button (new Rect (80, 110, 100, 20), "Back to menu")) {
+			Finish();
+		} 
+		if (GUI.Button (new Rect (220, 110, 100, 20), "Restart")) {
+			Next();
+			windowSwitch = 0; 
+		} 
+		
+		GUI.DragWindow (); 
+	}	
 }

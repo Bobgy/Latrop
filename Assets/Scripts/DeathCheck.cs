@@ -10,17 +10,11 @@ using System.Collections;
 
 public class DeathCheck : MonoBehaviour
 {
-	GameObject obj = null;
-
 	int windowWidth = 400;
 	int windowHight = 150;
-
-	//Limit of checking death
-	const double LIMIT = 2;	//!
-
 	Rect windowRect ;
 	int windowSwitch = 0;
-	float alpha = 0;
+
 	bool DeathFlag = false;
 
 	void Finish() {
@@ -36,24 +30,6 @@ public class DeathCheck : MonoBehaviour
         Time.timeScale = 1;
         Application.LoadLevel("demo2");
 	}
-	
-	void GUIAlphaColor_0_To_1 ()
-	{
-		if (alpha < 1) {
-			alpha += Time.deltaTime;
-			GUI.color = new Color (1, 1, 1, alpha);
-		} 
-	}
-	
-	// Init
-	void Awake ()
-	{
-		windowRect = new Rect (
-			(Screen.width - windowWidth) / 2,
-			(Screen.height - windowHight) / 2,
-			windowWidth,
-			windowHight);
-	}
 
 	//DeachCheck
 	void OnCollisionEnter(Collision other)
@@ -67,19 +43,26 @@ public class DeathCheck : MonoBehaviour
 	{
 		if (DeathFlag) {
 			windowSwitch = 1;
-			alpha = 0; // Init Window Alpha Color
             Time.timeScale = 0;
     		Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
 		}
 	}
+
+	// Init
+	void Awake ()
+	{
+		windowRect = new Rect (
+			(Screen.width - windowWidth) / 2,
+			(Screen.height - windowHight) / 2,
+			windowWidth,
+			windowHight);
+	}
 	
 	void OnGUI ()
 	{ 
-		if (obj != null) GUI.Label (new Rect (100, 300, 300, 300), "name: " + obj);
-
 		if (windowSwitch == 1) {
-			GUIAlphaColor_0_To_1 ();
+			GUI.color = new Color (1, 1, 1, 1);
 			windowRect = GUI.Window (0, windowRect, QuitWindow, "Quit Window");
 		}
 	}
