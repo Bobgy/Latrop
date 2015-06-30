@@ -49,8 +49,8 @@ public class Teleport : MonoBehaviour {
 
 		InitReflectionMatrixAndOtherStuff ();
 		// change position
-		// other.transform.position = otherPortal.transform.position;// + otherPortal.transform.forward * 1;
-		other.transform.position = reflection.MultiplyPoint3x4 (other.transform.position);
+		other.transform.position = otherPortal.transform.position;// + otherPortal.transform.forward * 1;
+		//other.transform.position = reflection.MultiplyPoint3x4 (other.transform.position);
 		other.transform.rotation = ObjectRotation * other.transform.rotation;
 
 		// change velocity
@@ -72,7 +72,8 @@ public class Teleport : MonoBehaviour {
 			other.GetComponent<Rigidbody> ().velocity = velocity;
 		
 			other.transform.rotation = Quaternion.LookRotation (tmp - otherPortal.transform.position);*/
-			other.GetComponent<Rigidbody>().velocity = velocity;
+			//other.GetComponent<Rigidbody>().velocity = velocity;
+      		other.GetComponent<Rigidbody>().velocity = hitNormal.normalized * other.GetComponent<Rigidbody>().velocity.magnitude;
 			other.GetComponent<Rigidbody>().angularVelocity = angularVelocity;
 		}
 	}
