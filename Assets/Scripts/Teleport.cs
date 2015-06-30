@@ -44,9 +44,11 @@ public class Teleport : MonoBehaviour {
 
 		// change velocity
 		if (other.GetComponent<Rigidbody> () != null) {
+            Debug.Log("entering");
+            Debug.Log(other.GetComponent<Rigidbody>().velocity);
 			Vector3 velocity = other.GetComponent<Rigidbody> ().velocity;
 			velocity = Vector3.Reflect (velocity, hitNormal);
-
+            Debug.Log(velocity);
 			Vector3 tmp = transform.position + velocity;
 			tmp = transform.worldToLocalMatrix.MultiplyPoint (tmp);
 

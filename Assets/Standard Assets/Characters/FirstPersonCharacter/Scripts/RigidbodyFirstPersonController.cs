@@ -137,7 +137,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public void setJumping()
         {
-            m_RigidBody.drag = 0f;
             m_Jumping = true;
             m_IsGrounded = false;
         }
