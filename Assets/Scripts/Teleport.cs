@@ -30,18 +30,9 @@ public class Teleport : MonoBehaviour {
 		}
 		Debug.Log ("something hit the portal");
 
-		Quaternion q2 = Quaternion.FromToRotation(-transform.up, otherPortal.up);
-
         if (teleportSound != null) teleportSound.Play();
 
 		otherPortal.GetComponent<Teleport> ().disableTimer = 1;
-		
-		// change object velocity
-		if (other.GetComponent<Rigidbody>() != null) {
-			other.GetComponent<Rigidbody>().velocity = q2 * other.GetComponent<Rigidbody>().velocity;
-			Debug.Log (otherPortal.transform.forward);
-		}
-
         
         FPCtrl ctrl = other.GetComponent<FPCtrl>();
         RigidbodyFirstPersonController ctrl2 = other.GetComponent<RigidbodyFirstPersonController>();
@@ -50,20 +41,23 @@ public class Teleport : MonoBehaviour {
 
 		// change position
 		other.transform.position = otherPortal.transform.position;// + otherPortal.transform.forward * 1;
-		
-		if (other.GetComponent<CharacterController> () != null) {
-			Vector3 velocity = other.GetComponent<CharacterController> ().velocity;
+
+		// change velocity
+		if (other.GetComponent<Rigidbody> () != null) {
+			Vector3 velocity = other.GetComponent<Rigidbody> ().velocity;
 			velocity = Vector3.Reflect (velocity, hitNormal);
-			
+
 			Vector3 tmp = transform.position + velocity;
-			tmp = transform.worldToLocalMatrix.MultiplyPoint(tmp);
-			
-			tmp = otherPortal.transform.localToWorldMatrix.MultiplyPoint(tmp);
-			
-			other.transform.rotation = Quaternion.LookRotation(tmp - otherPortal.transform.position);
+			tmp = transform.worldToLocalMatrix.MultiplyPoint (tmp);
+
+			tmp = otherPortal.transform.localToWorldMatrix.MultiplyPoint (tmp);
+			velocity = tmp - otherPortal.transform.position;
+			velocity = velocity.normalized * other.GetComponent<Rigidbody> ().velocity.magnitude;
+			other.GetComponent<Rigidbody> ().velocity = velocity;
+		
+			other.transform.rotation = Quaternion.LookRotation (tmp - otherPortal.transform.position);
 		}
-		else if (other.GetComponent<Rigidbody>() == null) {
-			// change rotation
+		else {
 			other.transform.rotation = otherPortal.transform.rotation;
 		}
 	}
