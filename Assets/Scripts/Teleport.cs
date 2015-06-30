@@ -72,7 +72,8 @@ public class Teleport : MonoBehaviour {
 			other.GetComponent<Rigidbody> ().velocity = velocity;
 		
 			other.transform.rotation = Quaternion.LookRotation (tmp - otherPortal.transform.position);*/
-			other.GetComponent<Rigidbody>().velocity = velocity;
+			//other.GetComponent<Rigidbody>().velocity = velocity;
+      		other.GetComponent<Rigidbody>().velocity = hitNormal.normalized * other.GetComponent<Rigidbody>().velocity.magnitude;
 			other.GetComponent<Rigidbody>().angularVelocity = angularVelocity;
 		}
 	}
